@@ -1,17 +1,17 @@
-# Snake opis
+## Snake opis
 
 Prosta gra Snake z BFS,  korzysta z biblioteki tkinter do wyświetlania gry
 
-# uruchomienie
+## uruchomienie
 
 poprzez:
 uv run python main.py
 
-# parametry
+## parametry
 
 w __init__.py można ustawić parametry startowe
 
-# Python Template
+## Python Template
 
 [![python](https://img.shields.io/badge/Python-3.14-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![ruff](https://github.com/wnowicki/pytemp/workflows/Ruff/badge.svg)](https://github.com/wnowicki/pytemp/actions?query=branch%3Amain)
