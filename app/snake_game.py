@@ -1,8 +1,7 @@
-import numpy as np
-
 import tkinter as tk
 
 import ai
+import numpy as np
 
 
 # Kolory elementów gry.
