@@ -1,6 +1,7 @@
-
-import random
 import tkinter as tk
+
+import numpy as np
+
 import ai
 
 # Kolory elementów gry.
@@ -47,7 +48,7 @@ class SnakeGame:
                     empty_cells.append((x, y))
         if not empty_cells:
             return None
-        return random.choice(empty_cells)
+        return empty_cells[np.random.randint(len(empty_cells))]
 
     # rysowanie kwadratu, cell to szerokość komórki w pikselach
     @staticmethod
@@ -82,12 +83,7 @@ class SnakeGame:
         self.bfs_retry_every_moves = max(0, int(bfs_retry_every_moves))
 
         # tworzenie planszy z samymi zerami
-        self.grid = []
-        for y in range(self.grid_h):
-            row: list[int] = []
-            for x in range(self.grid_w):
-                row.append(0)
-            self.grid.append(row)
+        self.grid = [[0] * self.grid_w for _ in range(self.grid_h)] 
 
         #okno rozmiar
         self.width = self.grid_w * self.cell 
@@ -289,7 +285,7 @@ class SnakeGame:
         # symulacja rund, max_steps ogranicza liczbę kroków w teście
         max_steps = max(5000, self.grid_w * self.grid_h * 500)
         lines = []
-        for round in range(1, self.logs + 1):
+        for game_round in range(1, self.logs + 1):
             self.reset()
             kroki = 0
             while not self.game_over and kroki < max_steps:
@@ -297,7 +293,7 @@ class SnakeGame:
                 kroki += 1
             if self.game_over:
                 lines.append(
-                    f"runda={round}; punkty={self.score}; dlugosc_weza={len(self.snake)}\n"
+                    f"runda={game_round}; punkty={self.score}; dlugosc_weza={len(self.snake)}\n"
                 )
         if lines:
             with open("logs.txt", "a", encoding="utf-8") as plik:
