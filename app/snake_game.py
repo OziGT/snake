@@ -6,7 +6,7 @@ import numpy as np
 
 # Kolory elementów gry.
 BG = "#000000"
-TEXT = "#FFFFFF"  
+TEXT = "#FFFFFF"
 SNAKE_HEAD = "#FFFF00"
 SNAKE_BODY = "#00DD00"
 FOOD = "#FF0000"
@@ -53,10 +53,10 @@ class SnakeGame:
     # rysowanie kwadratu, cell to szerokość komórki w pikselach
     @staticmethod
     def cell_rect(cell: int, x: int, y: int) -> tuple[int, int, int, int]:
-        x0 = x * cell 
-        y0 = y * cell 
-        x1 = (x + 1) * cell 
-        y1 = (y + 1) * cell 
+        x0 = x * cell
+        y0 = y * cell
+        x1 = (x + 1) * cell
+        y1 = (y + 1) * cell
         return x0, y0, x1, y1
 
     def __init__(
@@ -83,10 +83,10 @@ class SnakeGame:
         self.bfs_retry_every_moves = max(0, int(bfs_retry_every_moves))
 
         # tworzenie planszy z samymi zerami
-        self.grid = [[0] * self.grid_w for _ in range(self.grid_h)] 
+        self.grid = [[0] * self.grid_w for _ in range(self.grid_h)]
 
         #okno rozmiar
-        self.width = self.grid_w * self.cell 
+        self.width = self.grid_w * self.cell
         self.height = self.grid_h * self.cell
 
         #ustawienia Okna
@@ -100,7 +100,7 @@ class SnakeGame:
         if self.logging_mode:
             self.tk.withdraw()
 
-        self._after_id: str | None = None  
+        self._after_id: str | None = None
         self.ai_dirs: list[tuple[int, int]] = []  # kierunki z BFS
         self.bfs_nodes_last = 0  # liczba ostatnio sprawdzonych nodów, do wyświetlenia
         self.bfs_path_missing = False  # Czy znalazł ścieżkę do jedzenia
@@ -129,7 +129,7 @@ class SnakeGame:
         self.snake = [(sx - i, sy) for i in range(length)]
         self.dir = (1, 0) # kierunek węża w prawo
         self.pending = self.dir # kierunek węża w następnym kroku
-        
+
 
         for x, y in self.snake: # ustawienie cellsów węża na 1
             self.grid[y][x] = 1
@@ -199,7 +199,7 @@ class SnakeGame:
         self.grid[ny][nx] = 1
 
         # głowa najechała na jedzenie
-        if will_grow: 
+        if will_grow:
             self.score += 1
             food = self.place_food(self.grid)
             self.food = food
