@@ -87,4 +87,7 @@ def bfs_no_path_to_food(directions, food, head):
     if head == food:
         return False
     # jeżeli BFS nie zwrócił ścieżki, znaczy że nie doszedł do jedzenia
-    return len(directions) == 0
+    if len(directions) == 0:
+        return True
+    else:
+        return False
