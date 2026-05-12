@@ -1,6 +1,9 @@
 import tkinter as tk
+
 import numpy as np
+
 import ai
+
 
 # Kolory elementów gry.
 BG = "#000000"
