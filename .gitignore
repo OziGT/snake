@@ -1,3 +1,25 @@
+<<<<<<< HEAD
+# Środowiska wirtualne
+.venv/
+venv/
+env/
+
+# VS Code / Cursor — ustawienia lokalne
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Celowo poza repozytorium (wg wyboru autora)
+requirements.txt
+
+.DS_Store
+=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -150,3 +172,4 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
+>>>>>>> 62075e3120cb84b7096987641f363f5d1372beaa

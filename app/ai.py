@@ -1,0 +1,90 @@
+
+# Kolejność sąsiadów góra, dół, lewo, prawo
+DIRS = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+
+
+def in_bounds(board, x, y):
+    return((0 <= y < len(board)) and (0 <= x < len(board[0])))
+
+#Czy pole jest puste lub z jedzeniem
+def passable(board, x, y):
+    return(board[y][x] == 0 or board[y][x] == 2)
+
+# tworzy listę sąsiadów danego noda
+def neighbors(board, x, y):
+    out = []
+    for dx, dy in DIRS:
+        nx, ny = x + dx, y + dy
+        if in_bounds(board, nx, ny) and passable(board, nx, ny):
+            out.append((nx, ny))
+    return out
+
+# Stworzenie ścieżki od jedzenia do głowy i jej odwórcenie
+def path_reverse(nodes_parrents, goal):
+    # zaczynamy od jedzenia
+    path = [goal]
+    current_node = goal
+    # szukamy w drzewie rodziców aktualnego noda
+    while current_node in nodes_parrents:
+        # jak znaleźliśmy, to current_node zostaje rodzic aktualnego noda
+        current_node = nodes_parrents[current_node]
+        path.append(current_node)
+    # odwrócenie by zaczęło się od głowy do jedzenia
+    path.reverse()
+    return path
+
+
+def generate_directions(board, head, food):
+    """
+    Zwraca (lista kierunków (dx, dy) z BFS w stronę jedzenia, liczba odwiedzonych węzłów z kolejki).
+    Dozwolone pola kolejnych komórek: board == 0 lub 2.
+    """
+    # jeśli nie ma jedzenia lub głowa jest na jedzeniu, zwraca pustą listę kierunków i 0 odwiedzonych węzłów
+    if food is None or head == food:
+        return [], 0
+
+    # lista odwiedzonych nodów
+    visited = {head}
+    # słownik rodziców
+    nodes_parrents = {}
+    # kolejka nodów do odwiedzenia
+    q = [head]
+    visited_count = 0
+
+    while q:
+        current_node = q.pop(0)
+        visited_count += 1
+
+        if current_node == food:
+            path = path_reverse(nodes_parrents, current_node)
+            dirs = []
+            # tworzenie listy kierunków z wygenerowanej ścieżki BFS
+            for i in range(len(path) - 1):
+                from_x, from_y = path[i]
+                to_x, to_y = path[i + 1]
+                # obliczenie wektorów kierunku
+                step_x = to_x - from_x
+                step_y = to_y - from_y
+                dirs.append((step_x, step_y))
+            # zwracanie listy kierunków i liczby odwiedzonych węzłów
+            return dirs, visited_count
+
+        cx, cy = current_node
+        # dla każdego sąsiada aktualnego noda
+        for nb in neighbors(board, cx, cy):
+            if nb not in visited:
+                # dodanie noda do listy odwiedzonych
+                visited.add(nb)
+                # dodanie noda do słownika rodziców
+                nodes_parrents[nb] = current_node
+                # dodanie noda do kolejki
+                q.append(nb)
+
+    return [], visited_count
+
+
+def bfs_no_path_to_food(directions, food, head):
+    if head == food:
+        return False
+    # jeżeli BFS nie zwrócił ścieżki, znaczy że nie doszedł do jedzenia
+    return len(directions) == 0
